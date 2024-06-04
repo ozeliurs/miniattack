@@ -1,15 +1,11 @@
 import datetime as dt
 import math
 from os import path
-import matplotlib
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-import PySimpleGUI as sg
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.ticker import FuncFormatter
-
-matplotlib.use('TkAgg')
 
 
 def draw_figure(canvas, figure):
@@ -103,17 +99,3 @@ def gui(data, attack_range, itfs=[]):
     pp = PdfPages(pdp)
     pp.savefig()
     pp.close()
-
-    # Confiure PySimpleGUI
-    layout = [
-        [sg.Column([[sg.Canvas(key='-C1-')]], key='-COL1-',
-                   scrollable=True, vertical_scroll_only=True)],
-    ]
-    window = sg.Window(
-        'Mininet Attack Test',
-        layout, finalize=True, resizable=True, element_justification='center', font='Helvetica 18', keep_on_top=True, size=(800, 600)
-    )
-    draw_figure(window['-C1-'].TKCanvas, fig)
-    window['-COL1-'].expand(True, True)
-    event, values = window.read()
-    window.close()
